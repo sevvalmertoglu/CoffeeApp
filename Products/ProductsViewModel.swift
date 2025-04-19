@@ -36,25 +36,40 @@ final class ProductsViewModel {
     private var products: [Products] = []
     let networkManager: NetworkManager<ProductsEndpointItem>
     weak var delegate: ProductsViewModelDelegate?
+    private let useMockData: Bool
     
     private var currentQuery: String
     
-    init(networkManager: NetworkManager<ProductsEndpointItem>, query: String = "hot") {
+    init(networkManager: NetworkManager<ProductsEndpointItem>, query: String = "hot", useMockData: Bool = false) {
         self.networkManager = networkManager
         self.currentQuery = query
+        self.useMockData = useMockData
     }
     
     private func fetchProducts() {
-        networkManager.request(endpoint: .productsPage(query: currentQuery), type: [Products].self) { [weak self] result in
-            switch result {
-            case .success(let response):
-                self?.products = response
-                self?.delegate?.reloadData()
-            case .failure(let error):
-                print(error)
-                break
+        if useMockData {
+            loadMockProducts()
+        } else {
+            networkManager.request(endpoint: .productsPage(query: currentQuery), type: [Products].self) { [weak self] result in
+                switch result {
+                case .success(let response):
+                    self?.products = response
+                    self?.delegate?.reloadData()
+                case .failure(let error):
+                    print(error)
+                    break
+                }
             }
         }
+    }
+    
+    private func loadMockProducts() {
+        self.products = [
+            Products(id: 1, title: "Sandwich", price: 45.0, description: "Freshly made sandwich.", image: "sandvic"),
+            Products(id: 2, title: "Croissant", price: 38.5, description: "Chocolate croissant.", image: "kruvasan"),
+            Products(id: 3, title: "Cake Slice", price: 25.0, description: "Homemade cake slice.", image: "cake")
+        ]
+        self.delegate?.reloadData()
     }
 }
 

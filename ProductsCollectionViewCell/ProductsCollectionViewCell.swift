@@ -46,6 +46,9 @@ final class ProductsCollectionViewCell: UICollectionViewCell {
         containerView.layer.masksToBounds = true
         
         productImageView.layer.cornerRadius = Constants.UI.cornerRadius
+        productImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        productImageView.layer.masksToBounds = true
+        
         layer.masksToBounds = false
 
         titleLabel.font = Constants.UI.titleFont
@@ -66,13 +69,18 @@ extension ProductsCollectionViewCell: ProductsCollectionViewCellViewModelDelegat
     func setProductPrice(_ price: Double) {
         priceLabel.text = String(format: "%.2f TL", price)
     }
-
-    func setProductImage(with url: URL?) {
-        if let url = url {
-            productImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "cold-brew"))
+    
+    func setProductImage(with imageSource: String?) {
+        if let imageSource = imageSource {
+            if imageSource.hasPrefix("http") {
+                if let url = URL(string: imageSource) {
+                    productImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "cold-brew"))
+                }
+            } else {
+                productImageView.image = UIImage(named: imageSource) ?? UIImage(named: "cold-brew")
+            }
         } else {
             productImageView.image = UIImage(named: "cold-brew")
         }
     }
-
 }

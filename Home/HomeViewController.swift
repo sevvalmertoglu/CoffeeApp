@@ -141,20 +141,22 @@ class HomeViewController: UIViewController {
     @objc private func categoryButtonTapped(_ sender: UIButton) {
         guard let label = sender.accessibilityLabel else { return }
         let selectedQuery: String
+        var useMock = false
 
         switch label {
         case "Sıcak İçecekler":
             selectedQuery = "hot"
         case "Soğuk İçecekler":
             selectedQuery = "iced"
+        case "Yiyecekler":
+            useMock = true
+            selectedQuery = "food"
         default:
             selectedQuery = "hot"
         }
-
-        print("\(label) butonuna tıklandı.")
         
         if let destinationVC = storyboard?.instantiateViewController(identifier: "ProductsViewController") as? ProductsViewController {
-            destinationVC.viewModel = ProductsViewModel(networkManager: NetworkManager<ProductsEndpointItem>(), query: selectedQuery)
+            destinationVC.viewModel = ProductsViewModel(networkManager: NetworkManager<ProductsEndpointItem>(), query: selectedQuery, useMockData: useMock)
             self.navigationController?.pushViewController(destinationVC, animated: true)
         }
     }

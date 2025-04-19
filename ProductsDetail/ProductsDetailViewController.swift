@@ -84,10 +84,15 @@ final class ProductsDetailViewController: UIViewController {
         priceLabel.text = viewModel.price
         descriptionLabel.text = viewModel.description
         
-        if let url = URL(string: viewModel.imageUrl), !viewModel.imageUrl.isEmpty {
-            productImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "cold-brew"))
-        } else {
-            productImageView.image = UIImage(named: "cold-brew")
+        switch viewModel.imageSource {
+        case .url(let urlString):
+            if let url = URL(string: urlString) {
+                productImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "cold-brew"))
+            } else {
+                productImageView.image = UIImage(named: "cold-brew")
+            }
+        case .asset(let assetName):
+            productImageView.image = UIImage(named: assetName) ?? UIImage(named: "cold-brew")
         }
     }
 }
