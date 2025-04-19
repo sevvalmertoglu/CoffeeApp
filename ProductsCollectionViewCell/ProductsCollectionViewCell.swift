@@ -26,7 +26,7 @@ final class ProductsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
-    
+    @IBOutlet weak var favoriteButton: UIButton!
     
     var viewModel: ProductsCollectionViewCellViewModelProtocol! {
         didSet {
@@ -56,8 +56,12 @@ final class ProductsCollectionViewCell: UICollectionViewCell {
 
         priceLabel.font = Constants.UI.priceFont
         priceLabel.textColor = Constants.UI.priceColor
-
     }
+    
+    @IBAction func favoriteButtonTapped(_ sender: Any) {
+        viewModel.toggleFavorite()
+    }
+    
 }
 
 extension ProductsCollectionViewCell: ProductsCollectionViewCellViewModelDelegate {
@@ -82,5 +86,10 @@ extension ProductsCollectionViewCell: ProductsCollectionViewCellViewModelDelegat
         } else {
             productImageView.image = UIImage(named: "cold-brew")
         }
+    }
+    
+    func updateFavoriteStatus(isFavorite: Bool) {
+        let heartImage = UIImage(systemName: isFavorite ? "heart.fill" : "heart")
+        favoriteButton.setImage(heartImage, for: .normal)
     }
 }
