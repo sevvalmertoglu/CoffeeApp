@@ -140,12 +140,25 @@ class HomeViewController: UIViewController {
     
     @objc private func categoryButtonTapped(_ sender: UIButton) {
         guard let label = sender.accessibilityLabel else { return }
+        let selectedQuery: String
+
+        switch label {
+        case "Sıcak İçecekler":
+            selectedQuery = "hot"
+        case "Soğuk İçecekler":
+            selectedQuery = "iced"
+        default:
+            selectedQuery = "hot"
+        }
+
         print("\(label) butonuna tıklandı.")
-        if let  destinationVC = storyboard?.instantiateViewController(identifier: "ProductsViewController") as? ProductsViewController {
-            destinationVC.viewModel = ProductsViewModel(networkManager: NetworkManager<ProductsEndpointItem>())
+        
+        if let destinationVC = storyboard?.instantiateViewController(identifier: "ProductsViewController") as? ProductsViewController {
+            destinationVC.viewModel = ProductsViewModel(networkManager: NetworkManager<ProductsEndpointItem>(), query: selectedQuery)
             self.navigationController?.pushViewController(destinationVC, animated: true)
         }
     }
+
 }
 
 extension HomeViewController: UIScrollViewDelegate {
