@@ -67,7 +67,12 @@ extension ProductsCollectionViewCell: ProductsCollectionViewCellViewModelDelegat
         priceLabel.text = String(format: "%.2f TL", price)
     }
 
-    func setProductImage(with url: URL) {
-        productImageView.sd_setImage(with: url)
+    func setProductImage(with url: URL?) {
+        if let url = url {
+            productImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "cold-brew"))
+        } else {
+            productImageView.image = UIImage(named: "cold-brew")
+        }
     }
+
 }

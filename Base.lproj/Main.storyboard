@@ -137,6 +137,11 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="g3Y-Q9-J2N">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.30588236451148987" green="0.12156863510608673" blue="0.0" alpha="0.84705883260000003" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.30588236451148987" green="0.12156863510608673" blue="0.0" alpha="0.84705883260000003" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

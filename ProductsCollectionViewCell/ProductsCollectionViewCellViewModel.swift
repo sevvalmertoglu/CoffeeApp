@@ -15,7 +15,7 @@ protocol ProductsCollectionViewCellViewModelProtocol {
 protocol ProductsCollectionViewCellViewModelDelegate: AnyObject {
     func setProductTitle(_ text: String)
     func setProductPrice(_ price: Double)
-    func setProductImage(with url: URL)
+    func setProductImage(with url: URL?)
 }
 
 final class ProductsCollectionViewCellViewModel {
@@ -32,14 +32,19 @@ extension ProductsCollectionViewCellViewModel: ProductsCollectionViewCellViewMod
         if let title = product.title {
             delegate?.setProductTitle(title)
         }
-
+        
         if let price = product.price {
             delegate?.setProductPrice(price)
         }
-
+        
+        let imageUrl: URL?
         if let imageUrlString = product.image, let url = URL(string: imageUrlString) {
-            delegate?.setProductImage(with: url)
+            imageUrl = url
+        } else {
+            imageUrl = nil
         }
+        
+        delegate?.setProductImage(with: imageUrl)
     }
 }
 

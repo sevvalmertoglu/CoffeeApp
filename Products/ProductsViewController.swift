@@ -39,6 +39,14 @@ extension ProductsViewController: UICollectionViewDataSource {
 }
 
 extension ProductsViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let selectedProduct = viewModel.product(indexPath.item) else { return }
+        
+        let detailVC = ProductsDetailViewController()
+        detailVC.viewModel = ProductDetailViewModel(product: selectedProduct)
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = viewModel.calculateCellSize(collectionViewWidth: Double(collectionView.bounds.width))
         return .init(width: size.width, height: size.height )
