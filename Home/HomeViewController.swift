@@ -151,6 +151,8 @@ class HomeViewController: UIViewController {
         case "Yiyecekler":
             useMock = true
             selectedQuery = "food"
+        case "Favoriler":
+            selectedQuery = "favorites"
         default:
             selectedQuery = "hot"
         }

@@ -47,7 +47,9 @@ final class ProductsViewModel {
     }
     
     private func fetchProducts() {
-        if useMockData {
+        if currentQuery == "favorites" {
+            loadFavoriteProducts()
+        } else if useMockData {
             loadMockProducts()
         } else {
             networkManager.request(endpoint: .productsPage(query: currentQuery), type: [Products].self) { [weak self] result in
@@ -61,6 +63,28 @@ final class ProductsViewModel {
                 }
             }
         }
+    }
+    
+    private func loadFavoriteProducts() {
+        guard let favoriteProductsData = UserDefaults.standard.array(forKey: "favList") as? [[String: Any]] else {
+            self.products = []
+            self.delegate?.reloadData()
+            return
+        }
+        
+        let favoriteProducts: [Products] = favoriteProductsData.compactMap { dict in
+            guard let id = dict["id"] as? Int,
+                  let title = dict["title"] as? String,
+                  let price = dict["price"] as? Double,
+                  let description = dict["description"] as? String,
+                  let image = dict["image"] as? String else {
+                return nil
+            }
+            return Products(id: id, title: title, price: price, description: description, image: image)
+        }
+        
+        self.products = favoriteProducts
+        self.delegate?.reloadData()
     }
     
     private func loadMockProducts() {
