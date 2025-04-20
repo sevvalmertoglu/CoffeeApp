@@ -24,7 +24,7 @@
             </objects>
             <point key="canvasLocation" x="58" y="-2"/>
         </scene>
-        <!--Profile-->
+        <!--Profil-->
         <scene sceneID="I65-Bh-a3L">
             <objects>
                 <viewController storyboardIdentifier="ProfileViewController" id="Ums-Pt-tuP" customClass="ProfileViewController" customModule="CoffeeApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -34,13 +34,13 @@
                         <viewLayoutGuide key="safeArea" id="LSe-JM-KiQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Profile" image="person.fill" catalog="system" id="6zQ-MM-ZXh"/>
+                    <tabBarItem key="tabBarItem" title="Profil" image="person.fill" catalog="system" id="6zQ-MM-ZXh"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5iY-LV-bJx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1992" y="700"/>
         </scene>
-        <!--Cart-->
+        <!--Sepet-->
         <scene sceneID="OYB-st-p90">
             <objects>
                 <viewController storyboardIdentifier="CartViewController" id="vbr-LQ-oCd" customClass="CartViewController" customModule="CoffeeApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -69,7 +69,7 @@
                             <constraint firstItem="lqO-0Z-qUm" firstAttribute="trailing" secondItem="PQk-f2-aqW" secondAttribute="trailing" id="rAb-cM-AoL"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Cart" id="FLD-Ij-8UR">
+                    <tabBarItem key="tabBarItem" title="Sepet" id="FLD-Ij-8UR">
                         <imageReference key="image" image="cart.fill" catalog="system" variableValue="0.0"/>
                     </tabBarItem>
                     <connections>
@@ -168,11 +168,11 @@
             </objects>
             <point key="canvasLocation" x="1036" y="-2"/>
         </scene>
-        <!--Home-->
+        <!--Ana Sayfa-->
         <scene sceneID="RXx-ss-Dqs">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0ER-jc-mNC" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="house.fill" catalog="system" id="4CN-N1-tva"/>
+                    <tabBarItem key="tabBarItem" title="Ana Sayfa" image="house.fill" catalog="system" id="4CN-N1-tva"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="g3Y-Q9-J2N">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
