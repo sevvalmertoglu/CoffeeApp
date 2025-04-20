@@ -32,7 +32,7 @@ extension ProductsViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeCell(cellType: ProductsCollectionViewCell.self, indexPath: indexPath)
         
         if let product = viewModel.product(indexPath.item) {
-            cell.viewModel = ProductsCollectionViewCellViewModel(product: product)
+            cell.viewModel = ProductsCollectionViewCellViewModel(product: product, isPlusMinusVisible: false)
         }
         return cell
     }

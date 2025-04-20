@@ -144,6 +144,7 @@
             <connections>
                 <outlet property="containerView" destination="Kc1-Fu-9wh" id="2l5-SZ-Mbe"/>
                 <outlet property="favoriteButton" destination="2jE-fn-p4G" id="gVo-46-Uwy"/>
+                <outlet property="plusMinusStackView" destination="v0K-aW-wui" id="Zai-6R-KFG"/>
                 <outlet property="priceLabel" destination="wFY-hU-L83" id="4OD-3y-0Bd"/>
                 <outlet property="productImageView" destination="UD5-vY-GdX" id="NQ8-3o-JOA"/>
                 <outlet property="titleLabel" destination="tli-wY-s0O" id="0ee-ak-ror"/>

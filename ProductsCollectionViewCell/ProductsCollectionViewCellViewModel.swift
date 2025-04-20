@@ -9,6 +9,7 @@ import Foundation
 
 protocol ProductsCollectionViewCellViewModelProtocol {
     var delegate: ProductsCollectionViewCellViewModelDelegate? { get set }
+    var isPlusMinusVisible: Bool { get }
     func load()
     func toggleFavorite()
 }
@@ -18,14 +19,17 @@ protocol ProductsCollectionViewCellViewModelDelegate: AnyObject {
     func setProductPrice(_ price: Double)
     func setProductImage(with imageSource: String?)
     func updateFavoriteStatus(isFavorite: Bool)
+    func isPlusMinusVisible(isVisible: Bool)
 }
 
 final class ProductsCollectionViewCellViewModel {
     private let product: Products
     weak var delegate: ProductsCollectionViewCellViewModelDelegate?
+    let isPlusMinusVisible: Bool
 
-    init(product: Products) {
+    init(product: Products, isPlusMinusVisible: Bool = false) {
         self.product = product
+        self.isPlusMinusVisible = isPlusMinusVisible
     }
 }
 
@@ -43,6 +47,8 @@ extension ProductsCollectionViewCellViewModel: ProductsCollectionViewCellViewMod
         
         let isFavorite = isProductFavorited()
         delegate?.updateFavoriteStatus(isFavorite: isFavorite)
+        
+        delegate?.isPlusMinusVisible(isVisible: isPlusMinusVisible)
     }
     
     func isProductFavorited() -> Bool {

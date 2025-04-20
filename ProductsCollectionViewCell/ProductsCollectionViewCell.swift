@@ -27,6 +27,8 @@ final class ProductsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var plusMinusStackView: UIStackView!
+
     
     var viewModel: ProductsCollectionViewCellViewModelProtocol! {
         didSet {
@@ -92,4 +94,9 @@ extension ProductsCollectionViewCell: ProductsCollectionViewCellViewModelDelegat
         let heartImage = UIImage(systemName: isFavorite ? "heart.fill" : "heart")
         favoriteButton.setImage(heartImage, for: .normal)
     }
+    
+    func isPlusMinusVisible(isVisible: Bool) {
+        plusMinusStackView.isHidden = !isVisible
+    }
+    
 }

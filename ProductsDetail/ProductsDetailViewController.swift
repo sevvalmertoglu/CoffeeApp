@@ -125,9 +125,23 @@ final class ProductsDetailViewController: UIViewController {
         )
         
         CartManager.saveToCart(product: selectedProduct)
-        
-        if let tabBarController = tabBarController {
-            tabBarController.selectedIndex = 1
+
+        if let tabBarControllers = tabBarController?.viewControllers {
+            for vc in tabBarControllers {
+                let cartVC = CartViewController()
+                cartVC.configure(with: CartViewModel())
+                if let navVC = vc as? UINavigationController,
+                   let cartVC = navVC.viewControllers.first as? CartViewController,
+                   cartVC.isViewLoaded {
+                    cartVC.configure(with: CartViewModel())
+                    break
+                } else if let cartVC = vc as? CartViewController,
+                          cartVC.isViewLoaded {
+                    cartVC.configure(with: CartViewModel())
+                    break
+                }
+            }
+            tabBarController?.selectedIndex = 1
         }
     }
 }

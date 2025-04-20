@@ -72,6 +72,9 @@
                     <tabBarItem key="tabBarItem" title="Cart" id="FLD-Ij-8UR">
                         <imageReference key="image" image="cart.fill" catalog="system" variableValue="0.0"/>
                     </tabBarItem>
+                    <connections>
+                        <outlet property="cartCollectionView" destination="lqO-0Z-qUm" id="tpg-En-d2p"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RhQ-6e-7v5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
