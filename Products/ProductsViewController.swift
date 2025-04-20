@@ -73,5 +73,4 @@ extension ProductsViewController: ProductsViewModelDelegate {
           productsCollectionView.delegate = self
           productsCollectionView.register(cellType: ProductsCollectionViewCell.self)
       }
-      
 }

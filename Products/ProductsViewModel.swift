@@ -24,7 +24,7 @@ protocol ProductsViewModelProtocol {
     func load()
     func product(_ index: Int) -> Products?
     func calculateCellSize(collectionViewWidth: Double) -> (width: Double, height: Double)
-  
+    
 }
 
 protocol ProductsViewModelDelegate: AnyObject {
@@ -123,7 +123,7 @@ extension ProductsViewModel: ProductsViewModelProtocol {
     }
     
     func updateCategory(query: String) {
-           self.currentQuery = query
-           fetchProducts()
-       }
+        self.currentQuery = query
+        fetchProducts()
+    }
 }

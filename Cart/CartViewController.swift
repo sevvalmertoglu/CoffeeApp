@@ -56,15 +56,6 @@ extension CartViewController: UICollectionViewDataSource {
 }
 
 extension CartViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cartItem = viewModel.cartItem(indexPath.item) else { return }
-        
-        if let detailVC = storyboard?.instantiateViewController(identifier: "ProductsDetailViewController") as? ProductsDetailViewController {
-            detailVC.viewModel = ProductDetailViewModel(product: cartItem.product)
-            navigationController?.pushViewController(detailVC, animated: true)
-        }
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = viewModel.calculateCellSize(collectionViewWidth: Double(collectionView.bounds.width))
         return .init(width: size.width, height: size.height )

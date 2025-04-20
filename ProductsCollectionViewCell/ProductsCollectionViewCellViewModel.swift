@@ -85,7 +85,6 @@ extension ProductsCollectionViewCellViewModel: ProductsCollectionViewCellViewMod
         }
     }
     
-    
     func toggleFavorite() {
         var favoriteProducts = UserDefaults.standard.array(forKey: "favList") as? [[String: Any]] ?? []
         

@@ -107,15 +107,6 @@ final class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: LoginViewModelDelegate {
-
-    func showLoadingView() {
-        print("Yükleniyor...")
-    }
-
-    func hideLoadingView() {
-        print("Yükleme tamamlandı.")
-    }
-
     func loginSuccess() {
         DispatchQueue.main.async {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -134,13 +125,3 @@ extension LoginViewController: LoginViewModelDelegate {
         present(alert, animated: true)
     }
 }
-
-extension UITextField {
-    func setLeftPaddingPoints(_ amount:CGFloat){
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
-        self.leftView = paddingView
-        self.leftViewMode = .always
-    }
-}
-
-

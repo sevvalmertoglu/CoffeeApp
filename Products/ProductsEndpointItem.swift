@@ -8,7 +8,7 @@
 import Foundation
 
 enum ProductsEndpointItem: Endpoint {
-case productsPage(query: String)
+    case productsPage(query: String)
     var baseUrl: String { "https://api.sampleapis.com/coffee/"}
     var path: String {
         switch self {
@@ -21,6 +21,4 @@ case productsPage(query: String)
         case .productsPage: return .get
         }
     }
-    
-    
 }

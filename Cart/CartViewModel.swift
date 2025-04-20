@@ -37,18 +37,18 @@ protocol CartViewModelDelegate: AnyObject {
 final class CartViewModel {
     private(set) var cartItems: [CartItem] = []
     weak var delegate: CartViewModelDelegate?
-
+    
     func product(_ index: Int) -> Products? {
         guard index < cartItems.count else { return nil }
         return cartItems[index].product
     }
-
+    
     func load() {
         cartItems = CartManager.fetchCart()
         delegate?.prepareCollectionView()
         delegate?.reloadData()
     }
-
+    
     func increaseQuantity(at index: Int) {
         guard index < cartItems.count else { return }
         cartItems[index].quantity += 1
@@ -72,10 +72,9 @@ extension CartViewModel: CartViewModelProtocol {
         guard index < cartItems.count else { return nil }
         return cartItems[index]
     }
-
+    
     func createSummaryText() -> String {
         var summaryLines: [String] = []
-        
         for item in cartItems {
             let name = item.product.title ?? "Ürün"
             let quantity = item.quantity
@@ -88,13 +87,12 @@ extension CartViewModel: CartViewModelProtocol {
         
         let totalPrice = cartItems.reduce(0.0) { $0 + ($1.product.price ?? 0) * Double($1.quantity) }
         summaryLines.append("Toplam: \(String(format: "%.2f", totalPrice)) TL")
-        
         return summaryLines.joined(separator: "\n")
     }
     
     var numberOfItems: Int {
         cartItems.count
-     }
+    }
     
     var cellPadding: Double {
         Constants.cellLeftPadding
@@ -103,7 +101,6 @@ extension CartViewModel: CartViewModelProtocol {
     func calculateCellSize(collectionViewWidth: Double) -> (width: Double, height: Double) {
         let cellWidth = collectionViewWidth - (Constants.cellLeftPadding + Constants.cellRightPadding)
         let bannerImageHeight = cellWidth * Constants.cellBannerImageViewAspectRatio
-        
         return (width: cellWidth, height: Constants.cellDescriptionViewHeight + bannerImageHeight)
     }
 }

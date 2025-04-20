@@ -56,6 +56,4 @@ public final class NetworkManager<EndpointItem: Endpoint> {
                 }
         })
     }
-
-    
 }
