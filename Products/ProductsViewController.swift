@@ -9,7 +9,6 @@ import UIKit
 
 class ProductsViewController: UIViewController {
     
-    
     @IBOutlet private weak var productsCollectionView: UICollectionView!
     
     var viewModel: ProductsViewModelProtocol! {
@@ -31,6 +30,7 @@ extension ProductsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeCell(cellType: ProductsCollectionViewCell.self, indexPath: indexPath)
+        
         if let product = viewModel.product(indexPath.item) {
             cell.viewModel = ProductsCollectionViewCellViewModel(product: product)
         }
@@ -42,9 +42,10 @@ extension ProductsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let selectedProduct = viewModel.product(indexPath.item) else { return }
         
-        let detailVC = ProductsDetailViewController()
-        detailVC.viewModel = ProductDetailViewModel(product: selectedProduct)
-        navigationController?.pushViewController(detailVC, animated: true)
+        if let detailVC = storyboard?.instantiateViewController(identifier: "ProductsDetailViewController") as? ProductsDetailViewController {
+            detailVC.viewModel = ProductDetailViewModel(product: selectedProduct)
+            navigationController?.pushViewController(detailVC, animated: true)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

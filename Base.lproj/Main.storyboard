@@ -3,6 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -42,18 +43,39 @@
         <!--Cart-->
         <scene sceneID="OYB-st-p90">
             <objects>
-                <viewController id="vbr-LQ-oCd" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CartViewController" id="vbr-LQ-oCd" customClass="CartViewController" customModule="CoffeeApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4I5-xK-yDt">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lqO-0Z-qUm">
+                                <rect key="frame" x="0.0" y="59" width="393" height="710"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eKB-AU-FvU">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="PQk-f2-aqW"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="lqO-0Z-qUm" firstAttribute="top" secondItem="PQk-f2-aqW" secondAttribute="top" id="Nez-uv-v4X"/>
+                            <constraint firstItem="lqO-0Z-qUm" firstAttribute="bottom" secondItem="PQk-f2-aqW" secondAttribute="bottom" id="XXS-oc-Cvu"/>
+                            <constraint firstItem="lqO-0Z-qUm" firstAttribute="leading" secondItem="PQk-f2-aqW" secondAttribute="leading" id="f4q-vD-cV6"/>
+                            <constraint firstItem="lqO-0Z-qUm" firstAttribute="trailing" secondItem="PQk-f2-aqW" secondAttribute="trailing" id="rAb-cM-AoL"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Cart" image="cart.fill" catalog="system" id="FLD-Ij-8UR"/>
+                    <tabBarItem key="tabBarItem" title="Cart" id="FLD-Ij-8UR">
+                        <imageReference key="image" image="cart.fill" catalog="system" variableValue="0.0"/>
+                    </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RhQ-6e-7v5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1992" y="-2"/>
+            <point key="canvasLocation" x="1991.6030534351144" y="-2.1126760563380285"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="dXs-1B-1lk">
@@ -107,6 +129,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LTZ-rG-MDJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3864.8854961832058" y="-727.46478873239437"/>
+        </scene>
+        <!--Products Detail View Controller-->
+        <scene sceneID="C0R-D2-e4G">
+            <objects>
+                <viewController storyboardIdentifier="ProductsDetailViewController" id="XKw-Fd-HCJ" customClass="ProductsDetailViewController" customModule="CoffeeApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2BX-z5-NBM">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="sA0-jw-IkI"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x4j-o2-aCX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4674" y="-727"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="XCi-L6-jqR">

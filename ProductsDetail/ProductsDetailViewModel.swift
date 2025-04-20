@@ -8,6 +8,7 @@
 import Foundation
 
 protocol ProductDetailViewModelProtocol {
+    var id: Int { get }
     var title: String { get }
     var price: String { get }
     var description: String { get }
@@ -16,6 +17,10 @@ protocol ProductDetailViewModelProtocol {
 }
 
 final class ProductDetailViewModel: ProductDetailViewModelProtocol {
+    var id: Int {
+        product.id ?? 1
+    }
+    
     private let product: Products
     
     init(product: Products) {

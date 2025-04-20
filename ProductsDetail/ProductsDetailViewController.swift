@@ -46,6 +46,17 @@ final class ProductsDetailViewController: UIViewController {
         return label
     }()
     
+    private let buyButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Satın Al", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.backgroundColor = UIColor.brown
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 10
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 245/255, green: 236/255, blue: 230/255, alpha: 1.0)
@@ -58,6 +69,7 @@ final class ProductsDetailViewController: UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(priceLabel)
         view.addSubview(descriptionLabel)
+        view.addSubview(buyButton)
         
         NSLayoutConstraint.activate([
             productImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -75,7 +87,12 @@ final class ProductsDetailViewController: UIViewController {
             
             descriptionLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 12),
             descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            buyButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 20),
+            buyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 80),
+            buyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -80),
+            buyButton.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
     
@@ -93,6 +110,24 @@ final class ProductsDetailViewController: UIViewController {
             }
         case .asset(let assetName):
             productImageView.image = UIImage(named: assetName) ?? UIImage(named: "cold-brew")
+        }
+        
+        buyButton.addTarget(self, action: #selector(buyButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func buyButtonTapped() {
+        let selectedProduct = Products(
+            id: viewModel.id,
+            title: viewModel.title,
+            price: Double(viewModel.price.replacingOccurrences(of: " ₺", with: "")),
+            description: viewModel.description,
+            image: viewModel.imageUrl
+        )
+        
+        CartManager.saveToCart(product: selectedProduct)
+        
+        if let tabBarController = tabBarController {
+            tabBarController.selectedIndex = 1
         }
     }
 }
