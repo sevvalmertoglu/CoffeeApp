@@ -22,6 +22,7 @@ protocol CartViewModelProtocol {
     var cellPadding: Double { get }
     
     func load()
+    func createSummaryText() -> String
     func product(_ index: Int) -> Products?
     func calculateCellSize(collectionViewWidth: Double) -> (width: Double, height: Double)
 }
@@ -45,9 +46,26 @@ final class CartViewModel {
         delegate?.prepareCollectionView()
         delegate?.reloadData()
     }
+
 }
 
 extension CartViewModel: CartViewModelProtocol {
+    func createSummaryText() -> String {
+        var summary = ""
+        var total: Double = 0
+        let grouped = Dictionary(grouping: cartProducts, by: { $0.title })
+        
+        for (title, products) in grouped {
+            let count = products.count
+            let price = (products.first?.price ?? 0.0) * Double(count)
+            summary += "\(count) tane \(title ?? "") - \(price) TL\n"
+            total += price
+        }
+        
+        summary += "\nToplam Tutar: \(total) TL"
+        return summary
+    }
+    
     var numberOfItems: Int {
          return cartProducts.count
      }
