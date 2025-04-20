@@ -20,6 +20,11 @@ class ProductsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.load()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle), name: .didToggleFavorite, object: nil)
+    }
+    
+    @objc private func handleFavoriteToggle() {
+        viewModel.load()
     }
 }
 
@@ -32,7 +37,7 @@ extension ProductsViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeCell(cellType: ProductsCollectionViewCell.self, indexPath: indexPath)
         
         if let product = viewModel.product(indexPath.item) {
-            cell.viewModel = ProductsCollectionViewCellViewModel(product: product, isPlusMinusVisible: false)
+            cell.viewModel = ProductsCollectionViewCellViewModel(product: product, quantity: 1, isPlusMinusVisible: false)
         }
         return cell
     }

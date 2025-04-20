@@ -45,19 +45,22 @@ extension CartViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeCell(cellType: ProductsCollectionViewCell.self, indexPath: indexPath)
 
-        if let product = viewModel.product(indexPath.item) {
-            cell.viewModel = ProductsCollectionViewCellViewModel(product: product, isPlusMinusVisible: true)
+        if let cartItem = viewModel.cartItem(indexPath.item) {
+            let cellViewModel = ProductsCollectionViewCellViewModel(product: cartItem.product, quantity: cartItem.quantity, isPlusMinusVisible: true)
+            cell.viewModel = cellViewModel
+            cell.cartDelegate = self
         }
+
         return cell
     }
 }
 
 extension CartViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let selectedProduct = viewModel.product(indexPath.item) else { return }
+        guard let cartItem = viewModel.cartItem(indexPath.item) else { return }
         
         if let detailVC = storyboard?.instantiateViewController(identifier: "ProductsDetailViewController") as? ProductsDetailViewController {
-            detailVC.viewModel = ProductDetailViewModel(product: selectedProduct)
+            detailVC.viewModel = ProductDetailViewModel(product: cartItem.product)
             navigationController?.pushViewController(detailVC, animated: true)
         }
     }
@@ -116,3 +119,16 @@ extension CartViewController: CartViewModelDelegate {
     }
 }
 
+extension CartViewController: CartItemCellDelegate {
+    func didTapPlusButton(on cell: ProductsCollectionViewCell) {
+        if let indexPath = cartCollectionView.indexPath(for: cell) {
+            viewModel.increaseQuantity(at: indexPath.item)
+        }
+    }
+
+    func didTapMinusButton(on cell: ProductsCollectionViewCell) {
+        if let indexPath = cartCollectionView.indexPath(for: cell) {
+            viewModel.decreaseQuantity(at: indexPath.item)
+        }
+    }
+}

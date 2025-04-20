@@ -20,7 +20,18 @@ extension ProductsCollectionViewCell {
     }
 }
 
+extension Notification.Name {
+    static let didToggleFavorite = Notification.Name("didToggleFavorite")
+}
+
+protocol CartItemCellDelegate: AnyObject {
+    func didTapPlusButton(on cell: ProductsCollectionViewCell)
+    func didTapMinusButton(on cell: ProductsCollectionViewCell)
+}
+
 final class ProductsCollectionViewCell: UICollectionViewCell {
+    weak var cartDelegate: CartItemCellDelegate?
+    var product: Products?
     
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var productImageView: UIImageView!
@@ -28,7 +39,7 @@ final class ProductsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var plusMinusStackView: UIStackView!
-
+    @IBOutlet weak var quantityLabel: UILabel!
     
     var viewModel: ProductsCollectionViewCellViewModelProtocol! {
         didSet {
@@ -41,7 +52,7 @@ final class ProductsCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         setupUI()
     }
-
+        
     private func setupUI() {
         containerView.backgroundColor = UIColor.brown.withAlphaComponent(0.1)
         containerView.layer.cornerRadius = Constants.UI.cornerRadius
@@ -62,6 +73,18 @@ final class ProductsCollectionViewCell: UICollectionViewCell {
     
     @IBAction func favoriteButtonTapped(_ sender: Any) {
         viewModel.toggleFavorite()
+        NotificationCenter.default.post(name: .didToggleFavorite, object: nil)
+    }
+    
+    @IBAction func plusButtonTapped(_ sender: UIButton) {
+        viewModel.tappedPlusButton()
+        cartDelegate?.didTapPlusButton(on: self)
+       
+    }
+    
+    @IBAction func minusButtonTapped(_ sender: UIButton) {
+        viewModel.tappedMinusButton()
+        cartDelegate?.didTapMinusButton(on: self)
     }
     
 }
@@ -74,6 +97,10 @@ extension ProductsCollectionViewCell: ProductsCollectionViewCellViewModelDelegat
 
     func setProductPrice(_ price: Double) {
         priceLabel.text = String(format: "%.2f TL", price)
+    }
+    
+    func setQuantity(_ quantity: Int) {
+        quantityLabel.text = "\(quantity)"
     }
     
     func setProductImage(with imageSource: String?) {
@@ -99,4 +126,15 @@ extension ProductsCollectionViewCell: ProductsCollectionViewCellViewModelDelegat
         plusMinusStackView.isHidden = !isVisible
     }
     
+    func increaseQuantity() {
+        if let currentQuantity = Int(quantityLabel.text ?? "1") {
+            quantityLabel.text = "\(currentQuantity + 1)"
+        }
+    }
+    
+    func decreaseQuantity() {
+        if let currentQuantity = Int(quantityLabel.text ?? "1") {
+            quantityLabel.text = "\(currentQuantity - 1)"
+        }
+    }
 }

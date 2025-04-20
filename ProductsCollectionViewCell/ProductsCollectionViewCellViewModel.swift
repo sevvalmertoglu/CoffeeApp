@@ -9,26 +9,36 @@ import Foundation
 
 protocol ProductsCollectionViewCellViewModelProtocol {
     var delegate: ProductsCollectionViewCellViewModelDelegate? { get set }
+    var cartDelegate: CartItemCellDelegate? { get set }
     var isPlusMinusVisible: Bool { get }
     func load()
     func toggleFavorite()
+    func tappedPlusButton()
+    func tappedMinusButton()
 }
 
 protocol ProductsCollectionViewCellViewModelDelegate: AnyObject {
     func setProductTitle(_ text: String)
     func setProductPrice(_ price: Double)
+    func setQuantity(_ quantity: Int)
     func setProductImage(with imageSource: String?)
     func updateFavoriteStatus(isFavorite: Bool)
     func isPlusMinusVisible(isVisible: Bool)
+    func increaseQuantity()
+    func decreaseQuantity()
 }
 
 final class ProductsCollectionViewCellViewModel {
     private let product: Products
+    private var quantity: Int
     weak var delegate: ProductsCollectionViewCellViewModelDelegate?
+    weak var cartDelegate: CartItemCellDelegate?
+
     let isPlusMinusVisible: Bool
 
-    init(product: Products, isPlusMinusVisible: Bool = false) {
+    init(product: Products, quantity: Int, isPlusMinusVisible: Bool = false) {
         self.product = product
+        self.quantity = quantity
         self.isPlusMinusVisible = isPlusMinusVisible
     }
 }
@@ -42,6 +52,8 @@ extension ProductsCollectionViewCellViewModel: ProductsCollectionViewCellViewMod
         if let price = product.price {
             delegate?.setProductPrice(price)
         }
+        
+        delegate?.setQuantity(quantity)
         
         delegate?.setProductImage(with: product.image)
         
@@ -107,6 +119,14 @@ extension ProductsCollectionViewCellViewModel: ProductsCollectionViewCellViewMod
         UserDefaults.standard.set(favoriteProducts, forKey: "favList")
         
         delegate?.updateFavoriteStatus(isFavorite: isProductFavorited())
+    }
+    
+    func tappedPlusButton() {
+        delegate?.increaseQuantity()
+    }
+    
+    func tappedMinusButton() {
+        delegate?.decreaseQuantity()
     }
 }
 

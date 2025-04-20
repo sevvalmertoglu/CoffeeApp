@@ -90,6 +90,9 @@
                                                                 <buttonConfiguration key="configuration" style="plain" image="minus.circle.fill" catalog="system">
                                                                     <color key="baseForegroundColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.0" alpha="0.72219060430000004" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                                 </buttonConfiguration>
+                                                                <connections>
+                                                                    <action selector="minusButtonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="5oi-uL-fy1"/>
+                                                                </connections>
                                                             </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nI-kw-uYe">
                                                                 <rect key="frame" x="26.666666666666686" y="0.0" width="26.666666666666671" height="32"/>
@@ -103,6 +106,9 @@
                                                                 <buttonConfiguration key="configuration" style="plain" image="plus.circle.fill" catalog="system">
                                                                     <color key="baseForegroundColor" red="0.30588236451148987" green="0.12156863510608673" blue="0.0" alpha="0.84705883260000003" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 </buttonConfiguration>
+                                                                <connections>
+                                                                    <action selector="plusButtonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="hRJ-Cr-Hnd"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <constraints>
@@ -147,6 +153,7 @@
                 <outlet property="plusMinusStackView" destination="v0K-aW-wui" id="Zai-6R-KFG"/>
                 <outlet property="priceLabel" destination="wFY-hU-L83" id="4OD-3y-0Bd"/>
                 <outlet property="productImageView" destination="UD5-vY-GdX" id="NQ8-3o-JOA"/>
+                <outlet property="quantityLabel" destination="7nI-kw-uYe" id="b3x-lY-iTy"/>
                 <outlet property="titleLabel" destination="tli-wY-s0O" id="0ee-ak-ror"/>
             </connections>
             <point key="canvasLocation" x="223.66412213740458" y="36.971830985915496"/>

@@ -23,8 +23,10 @@ protocol CartViewModelProtocol {
     
     func load()
     func createSummaryText() -> String
-    func product(_ index: Int) -> Products?
+    func cartItem(_ index: Int) -> CartItem?
     func calculateCellSize(collectionViewWidth: Double) -> (width: Double, height: Double)
+    func increaseQuantity(at index: Int)
+    func decreaseQuantity(at index: Int)
 }
 
 protocol CartViewModelDelegate: AnyObject {
@@ -33,41 +35,65 @@ protocol CartViewModelDelegate: AnyObject {
 }
 
 final class CartViewModel {
-    private var cartProducts: [Products] = []
+    private(set) var cartItems: [CartItem] = []
     weak var delegate: CartViewModelDelegate?
 
     func product(_ index: Int) -> Products? {
-        guard index < cartProducts.count else { return nil }
-        return cartProducts[index]
+        guard index < cartItems.count else { return nil }
+        return cartItems[index].product
     }
 
     func load() {
-        self.cartProducts = CartManager.fetchCart()
+        cartItems = CartManager.fetchCart()
         delegate?.prepareCollectionView()
         delegate?.reloadData()
     }
 
+    func increaseQuantity(at index: Int) {
+        guard index < cartItems.count else { return }
+        cartItems[index].quantity += 1
+        CartManager.updateCartItems(cartItems)
+        load()
+    }
+    
+    func decreaseQuantity(at index: Int) {
+        guard index < cartItems.count else { return }
+        cartItems[index].quantity -= 1
+        if cartItems[index].quantity == 0 {
+            cartItems.remove(at: index)
+        }
+        CartManager.updateCartItems(cartItems)
+        load()
+    }
 }
 
 extension CartViewModel: CartViewModelProtocol {
+    func cartItem(_ index: Int) -> CartItem? {
+        guard index < cartItems.count else { return nil }
+        return cartItems[index]
+    }
+
     func createSummaryText() -> String {
-        var summary = ""
-        var total: Double = 0
-        let grouped = Dictionary(grouping: cartProducts, by: { $0.title })
+        var summaryLines: [String] = []
         
-        for (title, products) in grouped {
-            let count = products.count
-            let price = (products.first?.price ?? 0.0) * Double(count)
-            summary += "\(count) tane \(title ?? "") - \(price) TL\n"
-            total += price
+        for item in cartItems {
+            let name = item.product.title ?? "Ürün"
+            let quantity = item.quantity
+            let unitPrice = item.product.price ?? 0.0
+            let totalItemPrice = unitPrice * Double(quantity)
+            
+            let line = "\(quantity) tane \(name) - \(String(format: "%.2f", totalItemPrice)) TL"
+            summaryLines.append(line)
         }
         
-        summary += "\nToplam Tutar: \(total) TL"
-        return summary
+        let totalPrice = cartItems.reduce(0.0) { $0 + ($1.product.price ?? 0) * Double($1.quantity) }
+        summaryLines.append("Toplam: \(String(format: "%.2f", totalPrice)) TL")
+        
+        return summaryLines.joined(separator: "\n")
     }
     
     var numberOfItems: Int {
-         return cartProducts.count
+        cartItems.count
      }
     
     var cellPadding: Double {

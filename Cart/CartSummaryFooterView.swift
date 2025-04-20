@@ -32,7 +32,6 @@ final class CartSummaryFooterView: UICollectionReusableView {
         
         backgroundColor = UIColor(hex: "#D6C0B3")
         layer.cornerRadius = 15
-        layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         layer.masksToBounds = true
         
         addSubview(summaryLabel)
